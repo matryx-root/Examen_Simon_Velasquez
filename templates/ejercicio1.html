@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Calculo de Compras</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="center">
+        <div class="formulario">
+            <h1>Calculo de Compras</h1>
+
+            <form method="POST" action="/procesar_ejercicio1" id="formularioEjercicio1">
+                <label>Ingresa tu nombre: <input type="text" name="nombre"></label><br>
+                <label>Ingresa tu edad: <input type="number" name="edad"></label><br>
+                <label>Ingresa la cantidad de tarros de pintura a comprar: <input type="number" name="cantidad"></label><br>
+
+                <input type="submit" value="Calcular" onclick="calcular(event)">
+                <a href="/" class="button-yellow">Volver a la página principal</a>
+                <div id="resultadoEjercicio1">
+                    <!-- Aquí es donde se mostrará el resultado -->
+                </div>
+            </form>
+        </div>
+    </div>
+    <script>
+        function calcular(event) {
+            event.preventDefault();
+            // Obtener los valores del formulario (ajústalo según tus nombres de campos)
+            var nombre = document.getElementsByName('nombre')[0].value;
+            var edad = parseInt(document.getElementsByName('edad')[0].value);
+            var cantidad = parseInt(document.getElementsByName('cantidad')[0].value);
+
+            // Realizar los cálculos según la lógica de tu aplicación
+            var precioTarro = 9000;
+            var totalSinDescuento = cantidad * precioTarro;
+
+            // Aplicar descuento según la edad
+            var descuento = 0;
+            if (edad >= 18 && edad <= 30) {
+                descuento = totalSinDescuento * 0.15;
+            } else if (edad > 30) {
+                descuento = totalSinDescuento * 0.25;
+            }
+
+            // Calcular el total a pagar
+            var totalAPagar = totalSinDescuento - descuento;
+
+            // Construir el HTML del resultado
+            var resultadoHTML = `<h2>Resultado:</h2>
+                                <p>Nombre del cliente: ${nombre}</p>
+                                <p>Total sin descuento: $${totalSinDescuento}</p>
+                                <p>El descuento es: $${descuento}</p>
+                                <p>El total a pagar es de: $${totalAPagar}</p>`;
+
+            // Actualizar el contenido del elemento con id 'resultadoEjercicio1'
+            document.getElementById('resultadoEjercicio1').innerHTML = resultadoHTML;
+        }
+    </script>
+</body>
+</html>

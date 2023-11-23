@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Inicio de Sesión</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="center">
+        <div class="formulario">
+            <h1>Inicio de Sesión</h1>
+
+            <form method="POST" action="/ejercicio2" id="formularioEjercicio2" onsubmit="return verificar(event)">
+                <label>Ingresa tu nombre: <input type="text" name="nombre"></label><br>
+                <label>Ingresa tu contraseña: <input type="password" name="contrasena"></label><br>
+
+                <input type="submit" value="Verificar">
+                <a href="/" class="button-yellow">Volver a la página principal</a>
+                <div id="resultadoEjercicio2">
+                    <!-- Aquí es donde se mostrará el resultado -->
+                </div>
+            </form>
+        </div>
+    </div>
+    <script>
+        function verificar(event) {
+            // Prevenir el envío predeterminado del formulario
+            event.preventDefault();
+
+            // Obtener los valores del formulario (ajústalo según tus nombres de campos)
+            var nombre = document.getElementsByName('nombre')[0].value;
+            var contrasena = document.getElementsByName('contrasena')[0].value;
+
+            // Realizar los cálculos según la lógica de tu aplicación
+            var mensaje = "";
+
+            // Diccionario de usuarios y contraseñas
+            var usuarios = {
+                "juan": "admin",
+                "pepe": "user"
+            };
+
+            // Verificar si el usuario y la contraseña son correctos
+            if (nombre in usuarios && usuarios[nombre] === contrasena) {
+                if (nombre === 'juan') {
+                    mensaje = `Bienvenido administrador ${nombre}`;
+                } else if (nombre === 'pepe') {
+                    mensaje = `Bienvenido usuario ${nombre}`;
+                }
+            } else {
+                mensaje = "Usuario o contraseña incorrectos";
+            }
+
+            // Construir el HTML del resultado
+            var resultadoHTML = `<h2>Resultado:</h2>
+                                <p>${mensaje}</p>`;
+
+            // Actualizar el contenido del elemento con id 'resultadoEjercicio2'
+            document.getElementById('resultadoEjercicio2').innerHTML = resultadoHTML;
+        }
+    </script>
+</body>
+</html>
